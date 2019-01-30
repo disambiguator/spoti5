@@ -1,1 +1,14 @@
-{}
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@now/next"
+    }
+  ],
+  "env": {
+    "SPOTIFY_CLIENT_ID": "@spotify-client-id",
+    "BASE_URI": "@base_uri"
+  },
+  "alias": ["spoti5.now.sh"]
+}

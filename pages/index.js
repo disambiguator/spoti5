@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const spotify_params = {
   client_id: process.env.SPOTIFY_CLIENT_ID,
-  redirect_uri: 'http://localhost:3000/',
+  redirect_uri: process.env.BASE_URI,
   response_type: 'token'
 };
 const query_params = querystring.stringify(spotify_params);
