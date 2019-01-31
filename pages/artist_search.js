@@ -1,6 +1,25 @@
 import querystring from 'querystring'
 import axios from 'axios'
 import React from 'react'
+import styled from 'styled-components'
+
+const Button = styled.button`
+  background: transparent;
+  color: black;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+  border: 2px solid white;
+
+  &:hover {
+    border: 2px solid black;
+  }
+`
+
+const Stack = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 class ArtistSearch extends React.Component {
   componentDidMount () {
@@ -43,11 +62,11 @@ class ArtistSearch extends React.Component {
           Search for an artist:
           <input type='text' value={this.state.value} onChange={this.handleChange} />
         </label>
-        <ul>
+        <Stack>
           {this.state.artists.map((artist) =>
-            <li>{artist.name}</li>
+            <Button>{artist.name}</Button>
           )}
-        </ul>
+        </Stack>
       </div>
     )
   }
