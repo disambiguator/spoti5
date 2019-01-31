@@ -1,11 +1,11 @@
 import querystring from 'querystring'
 
-const spotify_params = {
+const spotifyParams = {
   client_id: process.env.SPOTIFY_CLIENT_ID,
   redirect_uri: `${process.env.BASE_URI}/artist_search`,
   response_type: 'token'
-};
-const SPOTIFY_AUTHORIZE_URL = `https://accounts.spotify.com/authorize?${querystring.stringify(spotify_params)}`;
+}
+const SPOTIFY_AUTHORIZE_URL = `https://accounts.spotify.com/authorize?${querystring.stringify(spotifyParams)}`
 
 export default () => (
   <div>
