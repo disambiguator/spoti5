@@ -2,10 +2,6 @@ import querystring from 'querystring'
 import axios from 'axios'
 import React from 'react'
 
-function extractArtistNames (response) {
-  return response.data.artists.items.map((artist) => (artist.name))
-}
-
 class ArtistSearch extends React.Component {
   componentDidMount () {
     this.setState({ accessToken: querystring.parse(window.location.hash)['#access_token'] })
@@ -17,27 +13,23 @@ class ArtistSearch extends React.Component {
     this.state = { value: '', artists: [], accessToken: null }
 
     this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange (event) {
-    this.setState({ value: event.target.value })
-  }
-
-  handleSubmit (event) {
-    event.preventDefault()
+    let artist = event.target.value
+    this.setState({ value: artist })
     axios.get('https://api.spotify.com/v1/search',
       {
         params: {
           type: 'artist',
-          q: this.state.value
+          q: artist
         },
         headers: {
           'Authorization': 'Bearer ' + this.state.accessToken
         }
       })
       .then((response) => (
-        this.setState({ artists: extractArtistNames(response) })
+        this.setState({ artists: response.data.artists.items })
       ))
       .catch((error) => (
         console.log(error)
@@ -46,20 +38,17 @@ class ArtistSearch extends React.Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <p>Enter your favorite artist:</p>
-        <p>Artists:</p>
-        <ul>
-          {this.state.artists.map((artist) =>
-            <li>{artist}</li>
-          )}
-        </ul>
+      <div>
         <label>
-          Artist:
+          Search for an artist:
           <input type='text' value={this.state.value} onChange={this.handleChange} />
         </label>
-        <input type='submit' value='Submit' />
-      </form>
+        <ul>
+          {this.state.artists.map((artist) =>
+            <li>{artist.name}</li>
+          )}
+        </ul>
+      </div>
     )
   }
 }
