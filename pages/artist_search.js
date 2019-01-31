@@ -16,9 +16,21 @@ const Button = styled.button`
   }
 `
 
-const Stack = styled.div`
+const Row = styled.div`
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`
+
+const Column = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  flex: 3;
+`
+
+const Placeholder = styled.div`
+  flex: 1;
 `
 
 class ArtistSearch extends React.Component {
@@ -57,17 +69,19 @@ class ArtistSearch extends React.Component {
 
   render () {
     return (
-      <div>
-        <label>
-          Search for an artist:
-          <input type='text' value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <Stack>
+      <Row>
+        <Placeholder/>
+        <Column>
+          <label>
+            🔍
+            <input type='text' value={this.state.value} onChange={this.handleChange}/>
+          </label>
           {this.state.artists.map((artist) =>
             <Button>{artist.name}</Button>
           )}
-        </Stack>
-      </div>
+        </Column>
+        <Placeholder/>
+      </Row>
     )
   }
 }
