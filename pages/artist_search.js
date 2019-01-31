@@ -33,6 +33,16 @@ const Placeholder = styled.div`
   flex: 1;
 `
 
+class ArtistButton extends React.Component {
+  selectArtist = () => {
+    this.props.onSelect(this.props.artist)
+  }
+
+  render = () => (
+    <Button onClick={this.selectArtist}>{this.props.artist.name}</Button>
+  )
+}
+
 class ArtistSearch extends React.Component {
   componentDidMount () {
     this.setState({ accessToken: querystring.parse(window.location.hash)['#access_token'] })
@@ -45,6 +55,10 @@ class ArtistSearch extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
   }
+
+  onSelect = (artist) => (
+    this.setState({ value: artist.name })
+  )
 
   handleChange (event) {
     let artist = event.target.value
@@ -70,17 +84,17 @@ class ArtistSearch extends React.Component {
   render () {
     return (
       <Row>
-        <Placeholder/>
+        <Placeholder />
         <Column>
           <label>
             🔍
-            <input type='text' value={this.state.value} onChange={this.handleChange}/>
+            <input type='text' value={this.state.value} onChange={this.handleChange} />
           </label>
           {this.state.artists.map((artist) =>
-            <Button>{artist.name}</Button>
+            <ArtistButton artist={artist} onSelect={this.onSelect} />
           )}
         </Column>
-        <Placeholder/>
+        <Placeholder />
       </Row>
     )
   }
