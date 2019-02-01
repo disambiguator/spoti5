@@ -57,7 +57,7 @@ class ArtistSearch extends React.Component {
   }
 
   onSelect = (artist) => (
-    this.setState({ value: artist.name })
+    this.setState({ value: artist.name, artists: [] })
   )
 
   handleChange (event) {
