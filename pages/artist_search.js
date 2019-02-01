@@ -4,25 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import initializeIcons from '../lib/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-const Square = styled.img`
-  object-fit: cover;
-  width:75px;
-  height:75px;
-`
-
-const Button = styled.div`
-  background: transparent;
-  color: black;
-  margin: 0 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
-  border: 2px solid white;
-
-  &:hover {
-    border: 2px solid black;
-  }
-`
+import ArtistButton from './artist_button'
 
 const Row = styled.div`
   display:flex;
@@ -40,19 +22,6 @@ const Column = styled.div`
 const Placeholder = styled.div`
   flex: 1;
 `
-
-class ArtistButton extends React.Component {
-  selectArtist = () => {
-    this.props.onSelect(this.props.artist)
-  }
-
-  render = () => (
-    <Button onClick={this.selectArtist}>
-      <Square src={this.props.artist.images[0].url} />
-      <span>{this.props.artist.name}</span>
-    </Button>
-  )
-}
 
 class ArtistSearch extends React.Component {
   componentDidMount () {
