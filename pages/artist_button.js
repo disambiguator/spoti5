@@ -1,28 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ListItem } from '../lib/components'
 
 const Square = styled.img`
   object-fit: cover;
-  width:75px;
-  height:75px;
+  width:50px;
+  height:50px;
 `
 
-const ImageContainer = styled.span`
-    min-height: 75px;
-    min-width: 75px;
-    display: inline-block;
+const ImageContainer = styled.div`
+    min-width: 50px;
 `
 
-const Button = styled.div`
-  background: transparent;
-  color: black;
-  margin: 0 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
-  border: 2px solid white;
-
+const Button = styled(ListItem)`
   &:hover {
-    border: 2px solid black;
+    border: 2px solid lightgreen;
   }
 `
 
@@ -38,7 +30,7 @@ class ArtistButton extends React.Component {
       <ImageContainer>
         <Square src={this.imageUrl(this.props.artist)} />
       </ImageContainer>
-      <span>{this.props.artist.name}</span>
+      <div>{this.props.artist.name}</div>
     </Button>
   )
 }

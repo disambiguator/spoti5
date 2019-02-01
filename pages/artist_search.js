@@ -5,12 +5,7 @@ import styled from 'styled-components'
 import initializeIcons from '../lib/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ArtistButton from './artist_button'
-
-const Row = styled.div`
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-`
+import { ListItem, Row } from '../lib/components'
 
 const Column = styled.div`
   display: flex;
@@ -33,15 +28,13 @@ class ArtistSearch extends React.Component {
     initializeIcons()
 
     this.state = { value: '', artists: [], accessToken: null }
-
-    this.handleChange = this.handleChange.bind(this)
   }
 
   onSelect = (artist) => (
     this.setState({ value: artist.name, artists: [] })
   )
 
-  handleChange (event) {
+  handleChange = event => {
     let artist = event.target.value
     this.setState({ value: artist })
     axios.get('https://api.spotify.com/v1/search',
@@ -67,10 +60,10 @@ class ArtistSearch extends React.Component {
       <Row>
         <Placeholder />
         <Column>
-          <label>
-            <FontAwesomeIcon icon="search" />
+          <ListItem>
             <input type='text' value={this.state.value} onChange={this.handleChange} />
-          </label>
+            <FontAwesomeIcon icon="search" />
+          </ListItem>
           {this.state.artists.map((artist) =>
             <ArtistButton artist={artist} onSelect={this.onSelect} />
           )}
