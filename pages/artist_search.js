@@ -2,6 +2,8 @@ import querystring from 'querystring'
 import axios from 'axios'
 import React from 'react'
 import styled from 'styled-components'
+import initializeIcons from '../lib/icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Square = styled.img`
   object-fit: cover;
@@ -59,6 +61,7 @@ class ArtistSearch extends React.Component {
 
   constructor (props) {
     super(props)
+    initializeIcons()
 
     this.state = { value: '', artists: [], accessToken: null }
 
@@ -96,7 +99,7 @@ class ArtistSearch extends React.Component {
         <Placeholder />
         <Column>
           <label>
-            🔍
+            <FontAwesomeIcon icon="search" />
             <input type='text' value={this.state.value} onChange={this.handleChange} />
           </label>
           {this.state.artists.map((artist) =>
