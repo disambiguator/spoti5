@@ -3,7 +3,13 @@ import axios from 'axios'
 import React from 'react'
 import styled from 'styled-components'
 
-const Button = styled.button`
+const Square = styled.img`
+  object-fit: cover;
+  width:75px;
+  height:75px;
+`
+
+const Button = styled.div`
   background: transparent;
   color: black;
   margin: 0 1em;
@@ -39,7 +45,10 @@ class ArtistButton extends React.Component {
   }
 
   render = () => (
-    <Button onClick={this.selectArtist}>{this.props.artist.name}</Button>
+    <Button onClick={this.selectArtist}>
+      <Square src={this.props.artist.images[0].url} />
+      <span>{this.props.artist.name}</span>
+    </Button>
   )
 }
 
