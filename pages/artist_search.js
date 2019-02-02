@@ -11,11 +11,23 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  flex: 3;
+  flex: 2;
 `
 
 const Placeholder = styled.div`
   flex: 1;
+`
+
+const ArtistSearchInput = styled.input`
+  font-size: 20px;
+  font-family: Arial;
+  text-align: right;
+  flex: 10;
+`
+
+const App = styled(Row)`
+  font-size: 20px;
+  font-family: Arial;
 `
 
 class ArtistSearch extends React.Component {
@@ -57,11 +69,11 @@ class ArtistSearch extends React.Component {
 
   render () {
     return (
-      <Row>
+      <App>
         <Placeholder />
         <Column>
           <ListItem>
-            <input type='text' value={this.state.value} onChange={this.handleChange} />
+            <ArtistSearchInput type='text' value={this.state.value} onChange={this.handleChange} />
             <FontAwesomeIcon icon="search" />
           </ListItem>
           {this.state.artists.map((artist) =>
@@ -69,7 +81,7 @@ class ArtistSearch extends React.Component {
           )}
         </Column>
         <Placeholder />
-      </Row>
+      </App>
     )
   }
 }
