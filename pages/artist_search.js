@@ -74,7 +74,7 @@ class ArtistSearch extends React.Component {
         <Column>
           <ListItem>
             <ArtistSearchInput type='text' value={this.state.value} onChange={this.handleChange} />
-            <FontAwesomeIcon icon="search" />
+            <FontAwesomeIcon icon='search' />
           </ListItem>
           {this.state.artists.map((artist) =>
             <ArtistButton artist={artist} onSelect={this.onSelect} />

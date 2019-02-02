@@ -18,21 +18,15 @@ const Button = styled(ListItem)`
   }
 `
 
-class ArtistButton extends React.Component {
-  selectArtist = () => {
-    this.props.onSelect(this.props.artist)
-  }
+const imageUrl = artist => (artist.images.length > 0 ? artist.images[0].url : null)
 
-  imageUrl = artist => (artist.images.length > 0 ? artist.images[0].url : null)
-
-  render = () => (
-    <Button onClick={this.selectArtist}>
-      <ImageContainer>
-        <Square src={this.imageUrl(this.props.artist)} />
-      </ImageContainer>
-      <div>{this.props.artist.name}</div>
-    </Button>
-  )
-}
+const ArtistButton = (props) => (
+  <Button onClick={() => props.onSelect(props.artist)}>
+    <ImageContainer>
+      <Square src={imageUrl(props.artist)} />
+    </ImageContainer>
+    <div>{props.artist.name}</div>
+  </Button>
+)
 
 export default ArtistButton
