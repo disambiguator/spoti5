@@ -4,7 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import initializeIcons from '../lib/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ArtistButton from './artist_button'
+import ArtistButton from '../lib/artist_button'
 import { ListItem, Row } from '../lib/components'
 
 const Column = styled.div`
