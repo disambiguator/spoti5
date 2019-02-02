@@ -30,6 +30,12 @@ const App = styled(Row)`
   font-family: Arial;
 `
 
+const StartButton = styled.button`
+  background: OliveDrab;
+  color: white;
+  font-size: 20px;
+`
+
 class ArtistSearch extends React.Component {
   componentDidMount () {
     this.setState({ accessToken: querystring.parse(window.location.hash)['#access_token'] })
@@ -39,11 +45,20 @@ class ArtistSearch extends React.Component {
     super(props)
     initializeIcons()
 
-    this.state = { value: '', artists: [], accessToken: null }
+    this.state = {
+      value: '',
+      artists: [],
+      accessToken: null,
+      selectedArtist: null
+    }
   }
 
   onSelect = (artist) => (
-    this.setState({ value: artist.name, artists: [] })
+    this.setState({
+      value: artist.name,
+      artists: [],
+      selectedArtist: artist
+    })
   )
 
   handleChange = event => {
@@ -67,18 +82,23 @@ class ArtistSearch extends React.Component {
       ))
   }
 
+  searchBox = () => (
+    this.state.selectedArtist ? <ArtistButton artist={this.state.selectedArtist} onSelect={this.onSelect} /> : <ListItem>
+      <ArtistSearchInput type='text' value={this.state.value} onChange={this.handleChange} />
+      <FontAwesomeIcon icon='search' />
+    </ListItem>
+  )
+
   render () {
     return (
       <App>
         <Placeholder />
         <Column>
-          <ListItem>
-            <ArtistSearchInput type='text' value={this.state.value} onChange={this.handleChange} />
-            <FontAwesomeIcon icon='search' />
-          </ListItem>
+          {this.searchBox()}
           {this.state.artists.map((artist) =>
             <ArtistButton artist={artist} onSelect={this.onSelect} />
           )}
+          {this.state.selectedArtist ? <StartButton>Let's Go!</StartButton> : null}
         </Column>
         <Placeholder />
       </App>
