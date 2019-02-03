@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import initializeIcons from '../lib/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ArtistButton from '../lib/artist_button'
-import Song from '../lib/song'
+import Track from '../lib/track'
 import { ListItem, Row } from '../lib/components'
 
 const Column = styled.div`
@@ -137,16 +137,16 @@ class ArtistSearch extends React.Component {
         <Row>
           <Songs>
             <p>Pop 5</p>
-            <Song />
-            <Song />
-            <Song />
-            <Song />
-            <Song />
+            <Track />
+            <Track />
+            <Track />
+            <Track />
+            <Track />
           </Songs>
           <Column>
             <p>Song Search</p>
-            {this.state.tracks.map((song) =>
-              <Song song={song} />
+            {this.state.tracks.map((track) =>
+              <Track track={track} />
             )}
           </Column>
         </Row>
