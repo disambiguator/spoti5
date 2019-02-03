@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import initializeIcons from '../lib/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ArtistButton from '../lib/artist_button'
+import Song from '../lib/song'
 import { ListItem, Row } from '../lib/components'
 
 const Column = styled.div`
@@ -34,6 +35,17 @@ const StartButton = styled.button`
   background: OliveDrab;
   color: white;
   font-size: 20px;
+`
+
+const times = x => f => {
+  if (x > 0) {
+    f()
+    times(x - 1)(f)
+  }
+}
+
+const Songs = styled.div`
+  padding-top: 50px
 `
 
 class ArtistSearch extends React.Component {
@@ -99,6 +111,15 @@ class ArtistSearch extends React.Component {
             <ArtistButton artist={artist} onSelect={this.onSelect} />
           )}
           {this.state.selectedArtist ? <StartButton>Let's Go!</StartButton> : null}
+
+          <Songs>
+            <p>Pop 5</p>
+            <Song />
+            <Song />
+            <Song />
+            <Song />
+            <Song />
+          </Songs>
         </Column>
         <Placeholder />
       </App>
