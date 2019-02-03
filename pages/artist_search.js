@@ -26,7 +26,7 @@ const ArtistSearchInput = styled.input`
   flex: 10;
 `
 
-const App = styled(Row)`
+const App = styled.div`
   font-size: 20px;
   font-family: Arial;
 `
@@ -44,7 +44,7 @@ const times = x => f => {
   }
 }
 
-const Songs = styled.div`
+const Songs = styled(Column)`
   padding-top: 50px
 `
 
@@ -60,18 +60,37 @@ class ArtistSearch extends React.Component {
     this.state = {
       value: '',
       artists: [],
+      tracks: [],
       accessToken: null,
       selectedArtist: null
     }
   }
 
-  onSelect = (artist) => (
+  onSelect = (artist) => {
     this.setState({
       value: artist.name,
       artists: [],
       selectedArtist: artist
     })
-  )
+
+    const artistUrl = `https://api.spotify.com/v1/artists/${artist.id}/top-tracks`
+
+    axios.get(artistUrl,
+      {
+        params: {
+          market: 'from_token'
+        },
+        headers: {
+          'Authorization': 'Bearer ' + this.state.accessToken
+        }
+      })
+      .then((response) => (
+        this.setState({ tracks: response.data.tracks })
+      ))
+      .catch((error) => (
+        console.log(error)
+      ))
+  }
 
   handleChange = event => {
     let artist = event.target.value
@@ -104,14 +123,18 @@ class ArtistSearch extends React.Component {
   render () {
     return (
       <App>
-        <Placeholder />
-        <Column>
-          {this.searchBox()}
-          {this.state.artists.map((artist) =>
-            <ArtistButton artist={artist} onSelect={this.onSelect} />
-          )}
-          {this.state.selectedArtist ? <StartButton>Let's Go!</StartButton> : null}
-
+        <Row>
+          <Placeholder />
+          <Column>
+            {this.searchBox()}
+            {this.state.artists.map((artist) =>
+              <ArtistButton artist={artist} onSelect={this.onSelect} />
+            )}
+            {this.state.selectedArtist ? <StartButton>Let's Go!</StartButton> : null}
+          </Column>
+          <Placeholder />
+        </Row>
+        <Row>
           <Songs>
             <p>Pop 5</p>
             <Song />
@@ -120,8 +143,13 @@ class ArtistSearch extends React.Component {
             <Song />
             <Song />
           </Songs>
-        </Column>
-        <Placeholder />
+          <Column>
+            <p>Song Search</p>
+            {this.state.tracks.map((song) =>
+              <Song song={song} />
+            )}
+          </Column>
+        </Row>
       </App>
     )
   }
