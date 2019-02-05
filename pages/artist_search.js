@@ -1,5 +1,4 @@
 import querystring from 'querystring'
-import axios from 'axios'
 import React from 'react'
 import styled from 'styled-components'
 import initializeIcons from '../lib/icons'
@@ -7,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ArtistButton from '../lib/artist_button'
 import Track from '../lib/track'
 import { ListItem, Row } from '../lib/components'
+import Spotify from '../lib/spotify'
 
 const Column = styled.div`
   display: flex;
@@ -50,7 +50,7 @@ const Songs = styled(Column)`
 
 class ArtistSearch extends React.Component {
   componentDidMount () {
-    this.setState({ accessToken: querystring.parse(window.location.hash)['#access_token'] })
+    this.spotify = new Spotify({ accessToken: querystring.parse(window.location.hash)['#access_token'] })
   }
 
   constructor (props) {
@@ -61,7 +61,6 @@ class ArtistSearch extends React.Component {
       value: '',
       artists: [],
       tracks: [],
-      accessToken: null,
       selectedArtist: null
     }
   }
@@ -73,51 +72,28 @@ class ArtistSearch extends React.Component {
       selectedArtist: artist
     })
 
-    const artistUrl = `https://api.spotify.com/v1/artists/${artist.id}/top-tracks`
-
-    axios.get(artistUrl,
-      {
-        params: {
-          market: 'from_token'
-        },
-        headers: {
-          'Authorization': 'Bearer ' + this.state.accessToken
-        }
-      })
+    this.spotify.getTracks({ artist: artist })
       .then((response) => (
         this.setState({ tracks: response.data.tracks })
-      ))
-      .catch((error) => (
-        console.log(error)
       ))
   }
 
   handleChange = event => {
     let artist = event.target.value
     this.setState({ value: artist })
-    axios.get('https://api.spotify.com/v1/search',
-      {
-        params: {
-          type: 'artist',
-          q: artist
-        },
-        headers: {
-          'Authorization': 'Bearer ' + this.state.accessToken
-        }
-      })
+
+    this.spotify.searchArtists({ artist: artist })
       .then((response) => (
         this.setState({ artists: response.data.artists.items })
-      ))
-      .catch((error) => (
-        console.log(error)
       ))
   }
 
   searchBox = () => (
-    this.state.selectedArtist ? <ArtistButton artist={this.state.selectedArtist} onSelect={this.onSelect} /> : <ListItem>
-      <ArtistSearchInput type='text' value={this.state.value} onChange={this.handleChange} />
-      <FontAwesomeIcon icon='search' />
-    </ListItem>
+    this.state.selectedArtist ? <ArtistButton artist={this.state.selectedArtist} onSelect={this.onSelect} /> :
+      <ListItem>
+        <ArtistSearchInput type='text' value={this.state.value} onChange={this.handleChange} />
+        <FontAwesomeIcon icon='search' />
+      </ListItem>
   )
 
   render () {
