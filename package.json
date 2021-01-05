@@ -23,7 +23,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel-eslint": "^10.0.2",
     "next": "^8.1.0",
     "react": "^16.8.6",
